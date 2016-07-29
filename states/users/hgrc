@@ -1,0 +1,95 @@
+[ui]
+username = {{ username }}
+
+[extensions]
+hgext.graphlog=
+hgext.convert=
+hgext.purge=
+hgext.rebase=
+hgext.mq=
+hgext.extdiff=
+hgext.bookmarks=
+hgext.color=
+color =
+progress =
+graphlog =
+rebase =
+purge =
+mq =
+pager=
+extdiff =
+
+[color]
+l.rev = yellow
+l.author = cyan
+l.branch = green
+l.tags = magenta
+l.bookmarks = red
+l.diffstat = cyan
+l.date = blue
+l.age = cyan
+
+[alias]
+# Needs Mercurial version 2.5 or above for label() function in templates
+# http://mercurial.selenic.com/wiki/WhatsNew/Archive#Mercurial_2.5_.282013-02-01.29
+#
+# Show very verbose changeset history:
+#
+# o  1078:6cb830346e77 ilkka
+# |  5: +104/-27 | Mon Jan 19 23:30:46 2015 +0200 | 3 days ago
+# |  Porting documentation changes from 16ada67d907d
+# |  --
+# |   doc/deployment/english.rst        |  47 ++++++++++++++++++++++++++++++++++-------------
+# |   doc/deployment/index.rst          |  48 ++++++++++++++++++++++++++++++++++--------------
+# |   doc/deployment/index_internal.rst |   2 ++
+# |   doc/deployment/process.rst        |  33 +++++++++++++++++++++++++++++++++
+# |   doc/index.rst                     |   1 +
+# |   5 files changed, 104 insertions(+), 27 deletions(-)
+# |
+#
+ll = log -G --pager=yes --stat --template="{label('l.rev', '{rev}:{node|short}')} {label('l.author', '{author|user}')}{ifeq(branch, 'default', '', ' {label(\"l.branch\", \"{branch}\")}')}{if(tags, ' {label(\"l.tags\", \"{tags}\")}')}{if(bookmarks, ' {label(\"l.bookmarks\", \"{bookmarks}\")}')}\n{label('l.diffstat', '{diffstat}')} | {label('l.date', '{date|date}')} | {label('l.age', '{date|age}')}\n{desc}\n--\n"
+
+# Show one line per changeset with graphlog:
+#
+# o  1076:99ecc7ba57f3 jussi v1.28.2 hide red unread message box if msg count unavailable
+# |
+# | o  1075:16ada67d907d matti Updated dream-sessions
+# | |
+# | o  1074:ebfe384ce206 tino Updating amqp and taking into use librabbitmq.
+# | |
+#
+l = log -G --pager=yes --template="{label('l.rev', '{rev}:{node|short}')} {label('l.author', '{author|user}')}{ifeq(branch, 'default', '', ' {label(\"l.branch\", \"{branch}\")}')}{if(tags, ' {label(\"l.tags\", \"{tags}\")}')}{if(bookmarks, ' {label(\"l.bookmarks\", \"{bookmarks}\")}')} {desc|firstline}\n"
+
+# Shorthand for "hg parent" with very verbose changeset format
+p = ll -r "."
+
+# Shorthand for "hg parent" with default template
+pa = parent
+
+# Shorthand for "hg branched"
+b = branches
+
+# Overwrites "hg push" and only pushes current branch
+push = push --rev .
+
+# Show the latest tag in the whole repo
+ltag = log -l 1 --template="{latesttag}\n"
+
+# Show content in the repo from latest tag to tip: new content not yet released
+nc = l -r "last(tag()):tip"
+
+# Show content in the repo from current revision to the tip
+n = l -r ".:tip"
+
+# Shows a diff from workarea to common ancestor between $1 and workarea.
+bdiff = diff -r ".:ancestor($1,.)"
+
+# Shorthand for diffing workarea to default.
+# All branches are started, or are merged eventually, to default.
+# This is useful when you want to see the diff in current branch against default.
+bdif = bdiff default
+
+[pager]
+pager = LESS='FSRX' less
+attend = annotate, cat, diff, export, glog, log, bdiff, bdif, qdiff, ll, l, p
+

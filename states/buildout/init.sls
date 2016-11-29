@@ -7,6 +7,7 @@ include:
 buildout-packages:
   pkg.installed:
     - names:
+      - libpq-dev
       - librabbitmq-dev
       - python-imaging
       - python-lxml

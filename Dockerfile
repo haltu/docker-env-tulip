@@ -7,7 +7,7 @@ VOLUME ["/srv/salt/base"]
 RUN echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/80haltu
 RUN echo 'APT::Install-Suggests "false";' >> /etc/apt/apt.conf.d/80haltu
 RUN apt-key add /srv/salt/base/SALTSTACK-GPG-KEY.pub &&\
-  echo "deb http://repo.saltstack.com/apt/ubuntu/ubuntu14/2015.8 trusty main" >> /etc/apt/sources.list.d/saltstack.list &&\
+  echo "deb http://repo.saltstack.com/apt/ubuntu/14.04/amd64/2015.8 trusty main" >> /etc/apt/sources.list.d/saltstack.list &&\
   apt-get update &&\
   apt-get install -y --no-install-recommends mercurial salt-minion &&\
   apt-get clean

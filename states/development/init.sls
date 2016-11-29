@@ -8,12 +8,12 @@ development-packages:
   pkg.installed:
     - names:
       - build-essential
-      - python-dev
+      - inotify-tools
+      - ipython
       - libffi-dev
       - libssl-dev
-      - ipython
+      - python-dev
       - python-virtualenv
-      - inotify-tools
 
 development-pip-packages:
   pip.installed:

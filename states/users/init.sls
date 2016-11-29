@@ -41,6 +41,20 @@ foo-group:
       - user: foo
       - group: foo
 
+/home/foo/.ssh:
+  file.directory:
+    - user: foo
+    - group: foo
+    - dir_mode: 700
+
+/home/foo/.ssh/config:
+  file.managed:
+    - source: salt://users/ssh_config
+    - user: foo
+    - group: foo
+    - require:
+      - file: /home/foo/.ssh
+
 /home/foo/.hgrc:
   file.managed:
     - source: salt://users/hgrc
